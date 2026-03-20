@@ -57,30 +57,30 @@ public:
 // Once position is found, our temp pointer is pointing to node we will insert after.
         newNode->next = temp->next;// New node's next pointer is set to temp's next pointer to prepare for insertion.
         newNode->prev = temp; // We do the same for new node's prev pointer, otherwise it would be left as nullptr and break the list.
-        if (temp->next) // Updates
-            temp->next->prev = newNode;
-        else
+        if (temp->next) // Temp's next pointer points back to temp as prev pointer if temp->next is not nullptr. 
+            temp->next->prev = newNode; // Ensures node after temp points back to new node as prev pointer.
+        else // If temp-next = nullptr, then temp is the tail and new node becomes the new tail.
             tail = newNode;
-        temp->next = newNode;
+        temp->next = newNode; // Temp's next pointer set to new node to complete insertion.
     }
 
     void delete_val(int value)
-    {
-        if (!head)
+    { // Deletes first node found with data member = value.
+        if (!head) // If list is empty (head = nullptr), exits function since there is nothing to delete.
             return;
 
-        Node *temp = head;
+        Node *temp = head; // Temp traversal pointer starts at head.
 
-        while (temp && temp->data != value)
-            temp = temp->next;
+        while (temp && temp->data != value) // As long as temp != nullptr and current node's data != value,
+            temp = temp->next; // temp moves to next node. Repeats until value found or end of list reached.
 
-        if (!temp)
+        if (!temp) // Condition described above^. Exits function if condition is true.
             return;
 
-        if (temp->prev)
-            temp->prev->next = temp->next;
-        else
-            head = temp->next;
+        if (temp->prev) // If temp's prev pointer != nullptr, temp is not head of list.
+            temp->prev->next = temp->next; // Sets temp's PREV NODE's next pointer to temp's next pointer to prepare for deletion.
+        else // If temp's prev pointer = nullptr, temp IS head of list.
+            head = temp->next; // Changes head pointer to next node since current head is being deleted.
 
         if (temp->next)
             temp->next->prev = temp->prev;
