@@ -262,6 +262,7 @@ public:
 
     int main()
     {
+        // Demo for every_other_element function. Should print odd indexed nodes in list starting with head as index 1.
         cout << "Demo for every_other_element function:" << endl;
         DoublyLinkedList list;
         list.push_back(1);
@@ -271,6 +272,12 @@ public:
         list.push_back(5);
         cout << "List: ";
         list.every_other_element(); // Should print 1, 3, and 5 since those are the odd indexed nodes in the list.
+
+        list.push_back(6);
+        list.push_back(7);
+        list.push_back(8);
+        cout << "\nUpdated List: ";
+        list.every_other_element(); // Should print 1, 3, 5, and 7 since those are the odd indexed nodes in the updated list.
 
         return 0;
     }
