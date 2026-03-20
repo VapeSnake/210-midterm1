@@ -30,34 +30,34 @@ public:
     }
 
     void insert_after(int value, int position)
-    { // Inserts a 
+    { // Inserts a new node with value for data member AFTER the node at chosen position.
         if (position < 0)
         {
             cout << "Position must be >= 0." << endl;
-            return;
+            return; // Validation to ensure position is non-negative. Exits function this is true.
         }
 
         Node *newNode = new Node(value);
-        if (!head)
-        {
+        if (!head) // The list traverses and sees if head = nullptr.
+        { // If true, new dynamic node is created and becomes both head AND tail of list.
             head = tail = newNode;
-            return;
+            return; // Exits function after this is done. Position not needed here since list was empty.
         }
 
-        Node *temp = head;
-        for (int i = 0; i < position && temp; ++i)
-            temp = temp->next;
+        Node *temp = head; // If list is not empty, a temporary pointer is needed to traverse and insert node properly.
+        for (int i = 0; i < position && temp; ++i) // Loop points temp pointer to each node until it reaches 
+            temp = temp->next; // position or end of list.
 
         if (!temp)
-        {
+        { // If desired position is greater than list size, temp will point to nullptr
             cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;
+            delete newNode; // Deletes new node since it can't be inserted to prevent memory leak and exits function.
             return;
         }
-
-        newNode->next = temp->next;
-        newNode->prev = temp;
-        if (temp->next)
+// Once position is found, our temp pointer is pointing to node we will insert after.
+        newNode->next = temp->next;// New node's next pointer is set to temp's next pointer to prepare for insertion.
+        newNode->prev = temp; // We do the same for new node's prev pointer, otherwise it would be left as nullptr and break the list.
+        if (temp->next) // Updates
             temp->next->prev = newNode;
         else
             tail = newNode;
