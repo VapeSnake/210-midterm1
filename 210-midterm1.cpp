@@ -82,42 +82,42 @@ public:
         else // If temp's prev pointer = nullptr, temp IS head of list.
             head = temp->next; // Changes head pointer to next node since current head is being deleted.
 
-        if (temp->next)
-            temp->next->prev = temp->prev;
-        else
+        if (temp->next) // Same logic as above, but for temp's next pointer. If temp's next pointer != nullptr,
+            temp->next->prev = temp->prev; // sets temp's NEXT NODE's prev pointer to temp's prev pointer to prepare deletion.
+        else // Otherwise, changes tail pointer to temp's prev node since temp is the tail and will be deleted.
             tail = temp->prev;
 
-        delete temp;
+        delete temp; // Deletes temp node to free memory and complete deletion.
     }
 
     void delete_pos(int pos)
-    {
+    { // Deletes node AT chosen position. This time position is indexed starting at 1.
         if (!head)
-        {
+        { //Displays message and exits function is list is empty. Nothing to delete.
             cout << "List is empty." << endl;
             return;
         }
 
         if (pos == 1)
-        {
-            pop_front();
+        { // If position is 1, calls pop_front function to delete head of list.
+            pop_front(); // Function handles pointer updates and deletion.
             return;
         }
 
-        Node *temp = head;
+        Node *temp = head; // Temp traversal pointer starting at head.
 
-        for (int i = 1; i < pos; i++)
+        for (int i = 1; i < pos; i++) // Starting at 1, temp moves through list until desired position is reached.
         {
             if (!temp)
-            {
+            { // If temp reaches nullptr, notifies user and exits function since no node exists at position to delete.
                 cout << "Position doesn't exist." << endl;
                 return;
             }
-            else
+            else // Moves temp to next node as long as temp != nullptr.
                 temp = temp->next;
         }
         if (!temp)
-        {
+        { // This line seems
             cout << "Position doesn't exist." << endl;
             return;
         }
