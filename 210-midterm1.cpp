@@ -117,43 +117,43 @@ public:
                 temp = temp->next;
         }
         if (!temp)
-        { // This line seems
+        { // Similar to above
             cout << "Position doesn't exist." << endl;
             return;
         }
 
         if (!temp->next)
-        {
-            pop_back();
+        { // If temp's next pointer = nullptr, temp is the tail and pop_back function can be called to delete it.
+            pop_back(); // Also handles all pointer updates and deletion.
             return;
         }
-
-        Node *tempPrev = temp->prev;
+ // If temp is not head or tail, temp's prev and next nodes need to be linked together to keep list intact after deletion.
+        Node *tempPrev = temp->prev; // Otherwise, list will be broken since temp's pointers will dangle after deletion.
         tempPrev->next = temp->next;
         temp->next->prev = tempPrev;
-        delete temp;
+        delete temp; // Deletes temp node to free memory and complete deletion.
     }
 
     void push_back(int v)
-    {
+    { // Creates new node with value for data member and adds it to end of list.
         Node *newNode = new Node(v);
-        if (!tail)
+        if (!tail) // If list is empty (tail = nullptr), new node becomes both head and tail of list.
             head = tail = newNode;
         else
-        {
-            tail->next = newNode;
+        { // If not empty, new node is added after tail and becomes new tail.
+            tail->next = newNode; // Old tail's next pointer is set to new node to prepare for insertion.
             newNode->prev = tail;
-            tail = newNode;
+            tail = newNode; // Tail pointer is updated to new node to complete insertion.
         }
     }
 
     void push_front(int v)
-    {
+    { // Similar to push_back, but adds new node to front of list instead. New node becomes new head.
         Node *newNode = new Node(v);
-        if (!head)
+        if (!head) // If list is empty (head = nullptr), new node becomes both head and tail of list.
             head = tail = newNode;
         else
-        {
+        { // When list is not empty, new node is added before head and becomes new head.
             newNode->next = head;
             head->prev = newNode;
             head = newNode;
@@ -161,47 +161,47 @@ public:
     }
 
     void pop_front()
-    {
+    { // Handles deletion of head node.
 
         if (!head)
-        {
+        { // Checks if list is empty.
             cout << "List is empty." << endl;
             return;
         }
 
-        Node *temp = head;
+        Node *temp = head; // Traversal pointer.
 
         if (head->next)
-        {
+        { // If head's next pointer != nullptr, head is not the only node in list and head can be updated to next node.
             head = head->next;
             head->prev = nullptr;
         }
-        else
+        else // Head is only node in list, so head and tail are set to nullptr to show an empty list.
             head = tail = nullptr;
-        delete temp;
+        delete temp; // Deletes temp node to free memory and complete deletion.
     }
 
     void pop_back()
-    {
+    { // Handles deletion of tail node.
         if (!tail)
-        {
+        { // Checks if list is empty.
             cout << "List is empty." << endl;
             return;
         }
-        Node *temp = tail;
+        Node *temp = tail; // Traversal pointer.
 
         if (tail->prev)
-        {
+        { // If tail->prev != nullptr, tail becomes the previous node and sets next pointer to nullptr.
             tail = tail->prev;
             tail->next = nullptr;
-        }
+        } // Similar to pop_front.
         else
             head = tail = nullptr;
-        delete temp;
+        delete temp; // Frees memory.
     }
 
     ~DoublyLinkedList()
-    {
+    { // Destructor to free memory of all nodes when list is destroyed, otherwise memory leaks!
         while (head)
         {
             Node *temp = head;
@@ -210,7 +210,7 @@ public:
         }
     }
     void print()
-    {
+    { // Prints list from head to tail.
         Node *current = head;
         if (!current)
         {
@@ -218,7 +218,7 @@ public:
             return;
         }
         while (current)
-        {
+        { // As long as current != nullptr, prints current node's data and moves to next node until end of list reached.
             cout << current->data << " ";
             current = current->next;
         }
@@ -226,7 +226,7 @@ public:
     }
 
     void print_reverse()
-    {
+    { // Prints list from tail to head.
         Node *current = tail;
         if (!current)
         {
